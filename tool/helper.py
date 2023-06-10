@@ -1,13 +1,13 @@
 import json
 import os
 import re
+import copy
+import io
 import uuid
 import streamlit as st
 import pandas as pd
-from custom import *
-import copy
-import io
-from text_toolkit import text_toolkit
+from tool.custom import *
+from tool.text_toolkit import text_toolkit
 
 
 def get_history_chats(path: str) -> list:
@@ -75,7 +75,7 @@ def show_each_message(message: str, role: str, idr: str, area=None):
         data_idr = idr + "_assistant"
         class_name = 'assistant'
     message = url_correction(message)
-    area[0](f"\n<div class='avatar'>{icon}<h2>{name}：</h2></div>", unsafe_allow_html=True)
+    area[0](f"\n<div class='avatar {class_name}'><img src='{icon}'></img></div>", unsafe_allow_html=True)
     area[1](
         f"""<div class='content-div {class_name}' data-idr='{data_idr}' style='background-color: {background_color};'>\n\n{message}""",
         unsafe_allow_html=True)
@@ -104,10 +104,12 @@ def show_messages(current_chat: str, messages: list):
 
 # 根据context_level提取history
 def get_history_input(history: list, level: int) -> list:
-    if level != 0 and history:
-        df_input = pd.DataFrame(history).query('role!="system"')
+    if level != 0:
+        df_history = pd.DataFrame(history)
+        df_system = df_history.query('role=="system"')
+        df_input = df_history.query('role!="system"')
         df_input = df_input[-level * 2:]
-        res = df_input.to_dict('records')
+        res = pd.concat([df_system, df_input], ignore_index=True).to_dict('records')
     else:
         res = []
     return res

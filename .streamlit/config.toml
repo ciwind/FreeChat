@@ -1,2 +1,8 @@
 [theme]
-base="light"
+# primaryColor="#4285F4"
+
+[client]
+showErrorDetails = false
+
+[server]
+enableStaticServing = true

@@ -132,3 +132,6 @@ dmypy.json
 .streamlit/
 .idea/
 history_chats_file/
+
+# config
+.streamlit/secrets.toml

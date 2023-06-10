@@ -250,8 +250,8 @@ synth.cancel()
 let TIMEOUT_KEEP_SYNTHESIS_WORKING = null;
 let KEEP_CheckNewMessages = null;
 let IGNORE_COMMAS = false;
-let preResultElementCount
-let preHrElementCount
+let preResultElementCount;
+let preHrElementCount;
 let IGNORE_CODE_BLOCKS = true;
 let NEW_ELEMENT = null;
 let CURRENT_MESSAGE_SENTENCES;
@@ -300,9 +300,9 @@ function SplitIntoSentences(text) {
         currentSentence += currentChar;
         // is the current character a delimiter? if so, add current part to array and clear
         if (// Latin punctuation
-            currentChar === (IGNORE_COMMAS ? '.' : ',')
-            || currentChar === (IGNORE_COMMAS ? '.' : ':')
-            || currentChar === '.'
+            currentChar === (IGNORE_COMMAS ? '.' : ':')
+            // || currentChar === (IGNORE_COMMAS ? '.' : ',')
+            // || currentChar === '.'
             || currentChar === '!'
             || currentChar === '?'
             || currentChar === (IGNORE_COMMAS ? '.' : ';')
@@ -317,6 +317,11 @@ function SplitIntoSentences(text) {
             if (currentSentence.trim() !== "") sentences.push(currentSentence.trim());
             currentSentence = "";
         }
+    }
+
+    // 没有分隔符结尾的回答
+    if(sentences.length === 0 && text !== "") {
+        sentences.push(text);
     }
     return sentences;
 }
@@ -384,7 +389,7 @@ function checkFormSubmit() {
             if (recordBtn.classList.contains('recording')) {
                 recordBtn.click()
             }
-            const textInput = window.parent.document.querySelector("textarea[aria-label='**输入：**']");
+            const textInput = window.parent.document.querySelector("textarea[aria-label='**我说：**']");
             if (window.parent.autoPlay && textInput.textContent !== '') {
                 preResultElementCount = window.parent.document.querySelectorAll("div.content-div.assistant").length;
                 preHrElementCount = window.parent.document.querySelectorAll("section.main hr").length
