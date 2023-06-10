@@ -2,6 +2,10 @@
 基于Streamlit搭建的ChatGPT对话助手，简单易用。
 ![chat.png](./Figure/chat.png)
 
+## 🤩 [已部署项目](https://freechat.streamlit.app/)
+- 直接使用已部署项目，可在网页的设置选项中配置Openai Key，此时不会留存历史对话，仅在用户当前会话有效，他人不会共享。
+- 自行部署项目，在Secrets中配置Openai Key后，将留存历史对话记录，此时需设置为私人应用，打造为个人GPT助理。   
+
 # 部署
 
 ## Streamlit Cloud部署（推荐）
@@ -75,4 +79,9 @@ streamlit run app.py
 
 # 致谢
 - 基于[PierXuY/ChatGPT-Assistant](https://github.com/PierXuY/ChatGPT-Assistant)项目进行的改造，感谢。
-- 主要添加了认证功能，支持密码或者cookie认证，避免每次输入难记的ApiKey，公开部署无忧。
+- 主要改变：
+    - 添加了认证功能，支持密码或者cookie认证，避免每次输入难记的ApiKey，公开部署无忧。
+    - 简化界面、优化朗读、支持逐句回复切换（非PC端逐句回复，朗读有问题，等前端大佬来解决）
+
+如果觉得好用，请我喝杯咖啡😄
+![chat.png](./static/tip_code.jpeg)
